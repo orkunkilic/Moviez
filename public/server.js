@@ -1,20 +1,50 @@
 (function () {
   'use strict';
-  let express = require('express');
-  var cors = require('cors');
-  const http = require('http');
+  const express = require('express')
+  const bodyParser = require('body-parser')
+  const low = require('lowdb')
+  const FileAsync = require('lowdb/adapters/FileAsync')
+  const cors = require('cors');
 
-  const port = process.env.PORT || 5000;
-
-  const app = express();
-  const server = http.createServer(app);
+  // Create server
+  const app = express()
+  app.use(bodyParser.json())
   app.use(cors());
+  app.options('*', cors());
 
-  app.get('/', function (req, res) {
-    res.send('Hello world! Filip Åhfelt here!');
-  });
+  // Create database instance and start server
+  const adapter = new FileAsync('db.json')
+  low(adapter)
+    .then(db => {
+      app.get('/:id', (req, res) => {
+        const movie = db.get('movies')
+          .find({ id: req.params.id })
+          .value()
 
-  server.listen(port, () => console.log(`Listening on port ${port}`));
+        res.send(movie)
+      })
 
+      app.get('/', (req, res) => {
+        const movies = db.get('movies')
+          .value()
+
+        res.send(movies)
+      })
+
+      app.post('/', (req, res) => {
+        db.get('movies')
+          .push(req.body)
+          .last()
+          .assign({ id: Date.now().toString() })
+          .write()
+          .then(movie => res.send(movie))
+      })
+
+      // Set db default values
+      return db.defaults({ movies: [] }).write()
+    })
+    .then(() => {
+      app.listen(5000, () => console.log('listening on port 5000'))
+    })
   module.exports = app;
 })();
