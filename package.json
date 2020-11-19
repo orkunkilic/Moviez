@@ -11,11 +11,16 @@
     "cross-env": "^7.0.2",
     "electron-is-dev": "^1.2.0",
     "express": "^4.17.1",
+    "lowdb": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "tailwindcss": "1.9.3"
   },
   "scripts": {
+    "build:tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.output.css",
+    "prestart": "npm run build:tailwind",
+    "prebuild": "npm run build:tailwind",
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "react-test": "react-scripts test",
