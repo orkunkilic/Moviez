@@ -16,17 +16,12 @@
   const adapter = new FileAsync('db.json')
   low(adapter)
     .then(db => {
-      app.get('/:id', (req, res) => {
-        const movie = db.get('movies')
-          .find({ id: req.params.id })
-          .value()
-
-        res.send(movie)
-      })
 
       app.get('/', (req, res) => {
-        const movies = db.get('movies')
-          .value()
+        const movies =
+          db.get('movies')
+            .value()
+
 
         res.send(movies)
       })
@@ -36,6 +31,7 @@
           .push(req.body)
           .last()
           .assign({ id: Date.now().toString() })
+          .assign({ date: Date.now() })
           .write()
           .then(movie => res.send(movie))
       })
