@@ -1,4 +1,6 @@
 import React from 'react'
+import AddMovie from './AddMovie'
+import MovieDetails from './MovieDetails'
 
 const Modal = ({ cb, children }) => {
     return (
@@ -11,7 +13,7 @@ const Modal = ({ cb, children }) => {
                 </div>
                 <div className="px-16 pb-12 pt-4">
 
-                    {children}
+                    {children === 'AddMovie' ? <AddMovie cb={cb} /> : <MovieDetails item={children} />}
 
                 </div>
             </div>

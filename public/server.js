@@ -20,6 +20,8 @@
       app.get('/', (req, res) => {
         const movies =
           db.get('movies')
+            .sortBy('date')
+            .reverse()
             .value()
 
 
@@ -31,7 +33,6 @@
           .push(req.body)
           .last()
           .assign({ id: Date.now().toString() })
-          .assign({ date: Date.now() })
           .write()
           .then(movie => res.send(movie))
       })
