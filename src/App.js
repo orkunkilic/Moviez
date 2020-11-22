@@ -44,7 +44,7 @@ function App() {
             <div className="flex flex-row">
               <h3>Rating:</h3>
               <div className=" ml-1">
-                {[...Array(item.rating)].map((x, i) =>
+                {[...Array(parseInt(item.rating))].map((x, i) =>
                   <div key={i} className="text-lg my-auto text-yellow-500 inline-block align-top">&#x2605;</div>
                 )}
               </div>
@@ -55,7 +55,11 @@ function App() {
         ))}
       </div>
       {!data && (
+        <h1 className="text-xl font-bold flex self-center justify-self-center">Loading...</h1>
+      )}
+      {data?.data.length <= 0 && (
         <h1 className="text-xl font-bold flex self-center justify-self-center">No Data!</h1>
+
       )}
     </div>
   );

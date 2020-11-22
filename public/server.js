@@ -37,6 +37,13 @@
           .then(movie => res.send(movie))
       })
 
+      app.delete('/', (req, res) => {
+        db.get('movies')
+          .remove({ id: req.query.id })
+          .write()
+          .then(movie => res.send(movie))
+      })
+
       // Set db default values
       return db.defaults({ movies: [] }).write()
     })
