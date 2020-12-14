@@ -1,8 +1,6 @@
-<h1 align="center">React Express Electron Boilerplate</h1>
+<h1 align="center">Moviez</h1>
 
-<p align="center">
-<img src="/screenshot.PNG" width="350">
-</p>
+A simple movie database. You can keep your reviews about movies. Built with Electron, React, Express, Lowdb, TailwindCSS.
 
 In the project directory, you can run:
 
